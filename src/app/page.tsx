@@ -1,3 +1,5 @@
+import CoinCard from "@/components/CoinCard";
+
 export default async function Home() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -10,7 +12,7 @@ export default async function Home() {
   let data;
 
   await fetch(
-    "https://api.coinbase.com/api/v3/brokerage/market/products/ETH-USD/ticker?limit=10&start=1730242740&end=1730319934",
+    "https://api.coinbase.com/api/v3/brokerage/market/products/ETH-USD/ticker?limit=5&start=1730242740&end=1730319934",
     requestOptions
   )
     .then((response) => response.text())
@@ -21,10 +23,15 @@ export default async function Home() {
     .catch((error) => console.error(error));
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <p>{data}</p>
+    <div className="mt-16">
+      <main className="grid grid-cols-3 gap-x-16 gap-y-10 sm:items-start">
+        <CoinCard pair={"BTC-USD"} price={69000} volume={32232} />
+        <CoinCard pair={"ETH-USD"} price={2700} volume={32232} />
+        <CoinCard pair={"AERO-USD"} price={69000} volume={32232} />
+        <CoinCard pair={"BTC-USD"} price={69000} volume={32232} />
+        <CoinCard pair={"BTC-USD"} price={69000} volume={32232} />
       </main>
+      <p className="mt-16">{data}</p>
     </div>
   );
 }

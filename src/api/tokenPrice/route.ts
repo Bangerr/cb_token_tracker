@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export function getTokenPrice() {
+export function getTokenPrice(tokenPair: string) {
   const config = {
     method: "get",
     maxBodyLength: Infinity,
-    url: "https://api.coinbase.com/api/v3/brokerage/market/products/AERO-USD/candles?start=1730242740&end=1730319934&granularity=ONE_HOUR&limit=10",
+    url: `https://api.coinbase.com/api/v3/brokerage/market/products/${tokenPair}/candles?start=1730242740&end=1730319934&granularity=ONE_HOUR&limit=10`,
     headers: {
       "Content-Type": "application/json",
     },
