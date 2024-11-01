@@ -2,17 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,10 +18,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} w-[50%] mx-auto h-screen px-2 antialiased`}>
-        <Navbar />
-        {children}
+      <body className={``}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange>
+          <SidebarProvider className="grid grid-cols-[200px_auto] grid-rows-12">
+            <div className="row-span-full">
+              <AppSidebar />
+            </div>
+            <div className="col-span-1 mt-2">
+              <Navbar />
+              <div className="">{children}</div>
+            </div>
+          </SidebarProvider>
+        </ThemeProvider>
       </body>
       <script src="https://kit.fontawesome.com/44b694a7ec.js" async></script>
     </html>
