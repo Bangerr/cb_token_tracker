@@ -51,29 +51,6 @@ const Wrapper = (props: Props) => {
   if (!tokenData) {
     return <div>Loading...</div>;
   }
-
-  // const requestOptions = {
-  //     method: "GET",
-  //     headers: myHeaders,
-  //     redirect: "follow",
-  // };
-  // let data;
-
-  // await fetch(
-  //     "https://api.coinbase.com/api/v3/brokerage/market/products/ETH-USD/ticker?limit=1&start=1730242740&end=1730319934",
-  //     requestOptions
-  // )
-  //     .then((response) => response.text())
-  //     .then((result) => {
-  //     data = result;
-  //     console.log(result);
-  //     })
-  //     .catch((error) => console.error(error));
-
-  // if (data) {
-  //     data = JSON.parse(data);
-  //     console.log("Pricsse: ", data.trades[0].price);
-  // }
   return (
     <div>
       <CoinCard
