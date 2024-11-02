@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -17,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={``}>
         <ThemeProvider
           attribute="class"
@@ -25,12 +24,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange>
           <SidebarProvider className="grid grid-cols-[200px_auto] grid-rows-12">
-            <div className="row-span-full">
-              <AppSidebar />
-            </div>
+            <AppSidebar />
             <div className="col-span-1 mt-2">
               <Navbar />
-              <div className="">{children}</div>
+              {children}
             </div>
           </SidebarProvider>
         </ThemeProvider>

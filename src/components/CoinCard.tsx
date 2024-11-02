@@ -2,9 +2,9 @@
 import React from "react";
 
 type Props = {
-  pair: string;
-  price: number;
-  volume: number;
+  pair: number;
+  price: string;
+  volume: string;
 };
 
 const CoinCard = ({ pair, price, volume }: Props) => {
@@ -13,7 +13,7 @@ const CoinCard = ({ pair, price, volume }: Props) => {
   };
 
   return (
-    <div className="min-h-max w-[250px] border rounded-lg p-2">
+    <div className="min-h-max border rounded-lg p-2">
       <div className="">
         <div className="">
           <h1 className="text-xl font-semibold">Pair: {pair}</h1>
@@ -24,7 +24,10 @@ const CoinCard = ({ pair, price, volume }: Props) => {
               Price: <span className="font-normal">{`$${price}`}</span>
             </p>
             <p className="font-semibold">
-              Volume: <span className="font-normal">{`$${volume}`}</span>
+              Volume:{" "}
+              <span className="font-normal">{`$${parseFloat(volume).toFixed(
+                2
+              )}`}</span>
             </p>
           </div>
           <button className="p-1.5 border rounded-lg" onClick={handleClick}>

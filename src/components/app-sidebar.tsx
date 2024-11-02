@@ -43,7 +43,7 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar className="row-span-full">
       <SidebarHeader />
       <SidebarContent>
         <SidebarGroup>
