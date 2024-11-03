@@ -1,46 +1,33 @@
 import path from "path";
 require("dotenv").config({ path: path.resolve(__dirname, "../../.env") }); // GET .env file from the root
+import { BASE_URL, ALGORITHM, JWT_ISSUER } from "./constants";
 import * as jwt from "jsonwebtoken";
 import * as crypto from "crypto";
 
-export function generateCoinbaseJWTToken() {
-  const keyName = process.env.NEXT_PUBLIC_CB_NAME;
-  const keySecret = process.env.NEXT_PUBLIC_CB_PRIVATEKEY;
+export function generateToken(
+  requestMethod: string,
+  requestPath: string,
+  apiKey: string,
+  apiSecret: string
+): string {
+  const uri = `${requestMethod} ${BASE_URL}${requestPath}`;
+  const payload = {
+    iss: JWT_ISSUER,
+    nbf: Math.floor(Date.now() / 1000),
+    exp: Math.floor(Date.now() / 1000) + 120,
+    sub: apiKey,
+    uri,
+  };
 
-  if (!keyName || !keySecret) {
-    throw new Error(
-      `Missing required environment variables CB_NAME: ${keyName} or CB_PRIVATEKEY: ${keySecret}`
-    );
-  }
+  const header = {
+    alg: ALGORITHM,
+    kid: apiKey,
+    nonce: crypto.randomBytes(16).toString("hex"),
+  };
+  const options: jwt.SignOptions = {
+    algorithm: ALGORITHM as jwt.Algorithm,
+    header: header,
+  };
 
-  const requestMethod = "GET";
-  const requestHost = "api.coinbase.com";
-  const requestPath = "/api/v3/brokerage/accounts";
-  const algorithm = "ES256";
-
-  const uri = `${requestMethod} ${requestHost}${requestPath}`;
-
-  try {
-    const generateJWT = (): string => {
-      const payload = {
-        iss: "cdp",
-        nbf: Math.floor(Date.now() / 1000),
-        exp: Math.floor(Date.now() / 1000) + 120,
-        sub: keyName,
-        uri,
-      };
-
-      const header = {
-        alg: algorithm,
-        kid: keyName,
-        nonce: crypto.randomBytes(16).toString("hex"),
-      };
-
-      return jwt.sign(payload, keySecret, { algorithm, header });
-    };
-
-    return generateJWT();
-  } catch (error) {
-    console.error("Error generating JWT:", error);
-  }
+  return jwt.sign(payload, apiSecret as string, options);
 }

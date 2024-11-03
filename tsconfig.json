@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
+    "rootDir": "./src" /* Specify the root folder within your source files. */,
+    "outDir": "./dist" /* Specify an output folder for all emitted files. */,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -11,6 +12,7 @@
     "module": "CommonJS",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
@@ -28,7 +30,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/**/*"
+    "src/**/*",
+    "src/**/*.ts" // Include all .ts files in the src directory and subdirectories
   ],
   "exclude": ["node_modules"]
 }

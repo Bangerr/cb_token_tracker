@@ -5,14 +5,9 @@ import CoinCard from "./CoinCard";
 type Props = {};
 
 type TokenDataParams = {
-  ask: string;
-  bid: string;
-  trade_id: number;
-  volume: string;
+  product_id: string;
   price: string;
-  size: string;
-  time: string;
-  rfq_volume: string;
+  volume_24h: string;
 };
 
 const Wrapper = (props: Props) => {
@@ -21,22 +16,18 @@ const Wrapper = (props: Props) => {
 
   useEffect(() => {
     async function fetchToken() {
-      // // Optional: Add API Key if required
-      // myHeaders.append(
-      //   "CB-ACCESS-KEY",
-      //   process.env.NEXT_PUBLIC_CB_ACCESS_KEY || ""
-      // );
-
       try {
-        const response = await fetch("/api/coinbase/btc-usd");
+        const response = await fetch("/api/tokenPrice", {
+          method: "GET",
+        });
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
-        console.log("Data recived:", data);
-        setTokenData(data);
+        console.log("Data recived:", JSON.parse(data));
+        setTokenData(JSON.parse(data));
       } catch (err) {
         console.error("Data fetching failed Step: ", err);
         setError(err instanceof Error ? err.message : "Failed to fetch data");
@@ -56,9 +47,9 @@ const Wrapper = (props: Props) => {
   return (
     <div>
       <CoinCard
-        pair={tokenData.trade_id}
+        pair={tokenData.product_id}
         price={tokenData.price}
-        volume={tokenData.volume}
+        volume={tokenData.volume_24h}
       />
     </div>
   );
