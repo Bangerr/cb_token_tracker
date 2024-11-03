@@ -5,20 +5,30 @@ import CoinCard from "./CoinCard";
 type Props = {};
 
 type TokenDataParams = {
-  product_id: string;
-  price: string;
-  volume_24h: string;
+  [key: string]: any;
 };
 
 const Wrapper = (props: Props) => {
-  const [tokenData, setTokenData] = useState<TokenDataParams | null>(null);
+  const [tokenData, setTokenData] = useState<TokenDataParams[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const tokenList = {
+    0: "BTC-USDC",
+    1: "ETH-USDC",
+    2: "SOL-USDC",
+    3: "UNI-USDC",
+    4: "AERO-USDC",
+    5: "LTC-USDC",
+  };
 
   useEffect(() => {
     async function fetchToken() {
       try {
         const response = await fetch("/api/tokenPrice", {
-          method: "GET",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ tokenList }),
         });
 
         if (!response.ok) {
@@ -26,8 +36,11 @@ const Wrapper = (props: Props) => {
         }
 
         const data = await response.json();
-        console.log("Data recived:", JSON.parse(data));
-        setTokenData(JSON.parse(data));
+        const parsedData = data.map((token: any) => ({
+          ...token,
+          productData: JSON.parse(token.productData),
+        }));
+        setTokenData(parsedData);
       } catch (err) {
         console.error("Data fetching failed Step: ", err);
         setError(err instanceof Error ? err.message : "Failed to fetch data");
@@ -45,12 +58,16 @@ const Wrapper = (props: Props) => {
     return <div>Loading...</div>;
   }
   return (
-    <div>
-      <CoinCard
-        pair={tokenData.product_id}
-        price={tokenData.price}
-        volume={tokenData.volume_24h}
-      />
+    <div className="grid md:grid-cols-3 grid-cols-1 md:gap-x-12 md:gap-y-10 sm:items-center justify-center">
+      {tokenData.map((token, idx) => (
+        <CoinCard
+          key={idx}
+          pair={token.productData.product_id}
+          price={token.productData.price}
+          volume={token.productData.volume_24h}
+          volumePercentage={token.productData.volume_percentage_change_24h}
+        />
+      ))}
     </div>
   );
 };
