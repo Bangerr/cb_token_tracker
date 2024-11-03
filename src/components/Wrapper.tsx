@@ -17,36 +17,38 @@ type TokenDataParams = {
 
 const Wrapper = (props: Props) => {
   const [tokenData, setTokenData] = useState<TokenDataParams | null>(null);
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchToken() {
-      try {
-        const response = await fetch(
-          "https://api.exchange.coinbase.com/products/ETH-USD/ticker",
-          {
-            method: "GET",
-            headers: myHeaders,
-            redirect: "follow",
-          }
-        );
+      // // Optional: Add API Key if required
+      // myHeaders.append(
+      //   "CB-ACCESS-KEY",
+      //   process.env.NEXT_PUBLIC_CB_ACCESS_KEY || ""
+      // );
 
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Data recived:", data);
-          setTokenData(data);
-        } else {
-          const error = await response.json();
-          console.error("Data fetching failed", error.message);
+      try {
+        const response = await fetch("/api/coinbase/btc-usd");
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        const data = await response.json();
+        console.log("Data recived:", data);
+        setTokenData(data);
       } catch (err) {
         console.error("Data fetching failed Step: ", err);
+        setError(err instanceof Error ? err.message : "Failed to fetch data");
       }
     }
 
     fetchToken();
   }, []);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   if (!tokenData) {
     return <div>Loading...</div>;
