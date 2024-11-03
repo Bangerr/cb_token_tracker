@@ -42,7 +42,7 @@ Coinbase instructions: https://docs.cdp.coinbase.com/advanced-trade/docs/getting
 ## Configuration
 
 ### Token Pairs
-You can customize which token pairs to track by modifying the `tokenList` object in your code:
+You can customize which token pairs to track by modifying the `tokenList` object inside the Wrapper.tsx file:
 
 ```typescript
 const tokenList = {
