@@ -77,14 +77,24 @@ yarn dev
 coinbase-market-tracker/
 ├── app/
 │   ├── api/
-│   │   └── coinbase/
-│   │       └── route.ts
+│   │   └── coinbase/tokenPrice/
+│   │       └── tokenPrice/
+│   │           └── route.ts
 │   └── page.tsx
 ├── components/
-│   ├── Wrapper.tsx
+│   ├── ui/
+│   ├── app-sidebar.tsx
+│   ├── CoinCard.tsx
+│   ├── Navbar.tsx
+│   ├── theme-provider.tsx
+│   ├── Toggle.tsx
 │   └── CoinCard.tsx
 ├── lib/
-│   └── rest.ts
+│   ├── rest/
+│   ├── types/
+│   ├── constans.ts
+│   ├── jwt.ts
+│   └── utils.ts
 ├── public/
 ├── .env
 └── README.md
