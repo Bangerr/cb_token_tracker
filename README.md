@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Coinbase API Market Data Tracker
 
-## Getting Started
+A Next.js application that tracks real-time market data for various cryptocurrency pairs using the Coinbase API.
 
-First, run the development server:
+## Features
 
+- Real-time cryptocurrency price tracking
+- Support for multiple token pairs
+- Easy configuration through environment variables
+- Built with Next.js and TypeScript
+- Responsive design with Tailwind CSS
+
+## Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+- Coinbase API credentials
+
+## Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/coinbase-market-tracker.git
+cd coinbase-market-tracker
+```
+
+2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Create a `.env` file in the root directory and add your Coinbase API credentials:
+```env
+NEXT_PUBLIC_CB_NAME=your_coinbase_api_key
+NEXT_PUBLIC_CB_PRIVATEKEY=your_coinbase_private_key
+```
+
+## Configuration
+
+### Token Pairs
+You can customize which token pairs to track by modifying the `tokenList` object in your code:
+
+```typescript
+const tokenList = {
+  0: "BTC-USDC",
+  1: "ETH-USDC",
+  2: "SOL-USDC",
+  3: "UNI-USDC",
+  4: "AERO-USDC",
+  5: "LTC-USDC",
+};
+```
+
+To add new pairs:
+1. Add a new entry to the `tokenList` object
+2. Use the format: `"TOKEN-USDC"`
+3. Increment the numeric key
+
+## Usage
+
+1. Start the development server:
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Open your browser and navigate to `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+coinbase-market-tracker/
+├── app/
+│   ├── api/
+│   │   └── coinbase/
+│   │       └── route.ts
+│   └── page.tsx
+├── components/
+│   ├── Wrapper.tsx
+│   └── CoinCard.tsx
+├── lib/
+│   └── rest.ts
+├── public/
+├── .env
+└── README.md
+```
 
-## Learn More
+## Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_CB_NAME` | Your Coinbase API key |
+| `NEXT_PUBLIC_CB_PRIVATEKEY` | Your Coinbase API private key |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API Reference
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application uses the Coinbase API to fetch market data. The main endpoints used are:
 
-## Deploy on Vercel
+- GET `/api/coinbase/products/{pair}` - Fetches current market data for a specific trading pair
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+- [Coinbase API Documentation](https://docs.cloud.coinbase.com/exchange/docs)
+- [Next.js Documentation](https://nextjs.org/docs)
+
+## Support
+
+For support, please open an issue in the GitHub repository or contact the maintainers.
