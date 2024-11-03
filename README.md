@@ -37,6 +37,8 @@ NEXT_PUBLIC_CB_NAME=your_coinbase_api_key
 NEXT_PUBLIC_CB_PRIVATEKEY=your_coinbase_private_key
 ```
 
+Coinbase instructions: https://docs.cdp.coinbase.com/advanced-trade/docs/getting-started
+
 ## Configuration
 
 ### Token Pairs
